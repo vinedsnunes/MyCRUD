@@ -11,8 +11,9 @@ namespace MyCrud.Api.IoC
     {
         public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
+            //var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
+            services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DATABASE_CONNECTION_STRING")));
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductRepository, ProductRepository>();

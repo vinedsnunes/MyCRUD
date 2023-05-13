@@ -46,14 +46,12 @@ namespace MyCrud.Api.Extensions
             });
         }
 
-        public static void UseSwaggerUI(this WebApplication app)
+        public static void UseSwaggerUi(this WebApplication app)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                var apiVersionProvider = app.Services.GetService<IApiVersionDescriptionProvider>();
-                if (apiVersionProvider == null)
-                    throw new ArgumentException("API Versioning not registered.");
+                var apiVersionProvider = app.Services.GetService<IApiVersionDescriptionProvider>() ?? throw new ArgumentException("API Versioning not registered.");
 
                 foreach (var description in apiVersionProvider.ApiVersionDescriptions)
                 {
@@ -61,9 +59,9 @@ namespace MyCrud.Api.Extensions
                     $"/swagger/{description.GroupName}/swagger.json",
                     description.GroupName);
                 }
+
                 options.RoutePrefix = "swagger";
                 options.InjectStylesheet("/swagger-ui/swagger-dark.css");
-
                 options.DocExpansion(DocExpansion.List);
             });
         }

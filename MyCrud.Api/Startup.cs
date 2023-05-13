@@ -21,7 +21,7 @@ namespace MyCrud.Api
 
         public void Configure(WebApplication app, IWebHostEnvironment env)
         {
-            app.UseSwaggerUI();
+            app.UseSwaggerUi();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();

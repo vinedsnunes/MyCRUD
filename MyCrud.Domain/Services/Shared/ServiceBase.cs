@@ -8,7 +8,7 @@ namespace MyCrud.Domain.Services.Shared
     {
         private readonly IRepositoryBase<TEntity> _repositoryBase;
 
-        public ServiceBase(IRepositoryBase<TEntity> repositoryBase) =>
+        protected ServiceBase(IRepositoryBase<TEntity> repositoryBase) =>
             _repositoryBase = repositoryBase;
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync() =>

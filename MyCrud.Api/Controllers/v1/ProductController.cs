@@ -15,20 +15,43 @@ namespace MyCrud.Api.Controllers.v1
         public ProductController(IProductService productService) =>
             _productService = productService;
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAll()
-        {
-            var products = await _productService.GetAllAsync();
-            var response = products.Select(product => ProductResponse.ConvertToResponse(product));
-            return Ok(response);
-        }
-
         [HttpPost]
         public async Task<ActionResult<int>> Add(PostProductRequest request)
         {
             var product = PostProductRequest.ConvertToEntity(request);
             var id = await _productService.AddAsync(product);
             return Ok(id);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAll()
+        {
+            var products = await _productService.GetAllAsync();
+            var response = products.Select(ProductResponse.ConvertToResponse);
+            return Ok(response);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<ProductResponse>> GetById(int id)
+        {
+            var product = await _productService.GetByIdAsync(id);
+            var response = ProductResponse.ConvertToResponse(product);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ProductResponse>> Put(PutProductRequest request)
+        {
+            var product = PutProductRequest.ConvertToEntity(request);
+            await _productService.UpdateAsync(product);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _productService.RemoveByIdAsync(id);
+            return Ok();
         }
     }
 }
