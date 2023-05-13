@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "MyCrud.API": {
+    "MyCrud.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
